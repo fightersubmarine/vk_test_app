@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  vk_test_app
+
+  Created by Александр on 21.07.2024.
+  
+*/
+
+"for_clear" = "Clear";
+"for_rain" = "Rain";
+"for_storm" = "Storm";
+"for_fog" = "Fog";
+"for_snow" = "Snow";
