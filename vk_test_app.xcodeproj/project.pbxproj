@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C74025A12C4E73750025D8E0 /* WeatherCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C74025A02C4E73750025D8E0 /* WeatherCollectionViewCell.swift */; };
 		C773DE7A2C4D14FD002D3B9C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C773DE792C4D14FD002D3B9C /* AppDelegate.swift */; };
 		C773DE7C2C4D14FD002D3B9C /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C773DE7B2C4D14FD002D3B9C /* SceneDelegate.swift */; };
 		C773DE832C4D14FF002D3B9C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C773DE822C4D14FF002D3B9C /* Assets.xcassets */; };
@@ -26,6 +27,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C74025A02C4E73750025D8E0 /* WeatherCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCollectionViewCell.swift; sourceTree = "<group>"; };
 		C773DE762C4D14FD002D3B9C /* vk_test_app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = vk_test_app.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C773DE792C4D14FD002D3B9C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C773DE7B2C4D14FD002D3B9C /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				C773DE902C4D15EC002D3B9C /* MainScreenViewController.swift */,
 				C773DE9B2C4D16F3002D3B9C /* MainScreenPresenter.swift */,
 				C773DE9D2C4D1ABC002D3B9C /* MainScreenModel.swift */,
+				C74025A02C4E73750025D8E0 /* WeatherCollectionViewCell.swift */,
 			);
 			path = MainScreen;
 			sourceTree = "<group>";
@@ -223,6 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C74025A12C4E73750025D8E0 /* WeatherCollectionViewCell.swift in Sources */,
 				C79CAA942C4D75BE004E0D9D /* String+Extension.swift in Sources */,
 				C773DE9C2C4D16F3002D3B9C /* MainScreenPresenter.swift in Sources */,
 				C773DEA32C4D43BE002D3B9C /* UIImage+Extension.swift in Sources */,

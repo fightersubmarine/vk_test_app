@@ -10,11 +10,8 @@ import UIKit
 // MARK: - Constants
 
 private enum MainScreenStrings {
-    static let clear = "for_clear".localized
-    static let rain = "for_rain".localized
-    static let storm = "for_storm".localized
-    static let fog = "for_fog".localized
-    static let snow = "for_snow".localized
+    static let idCell = "CollectionViewCellID"
+    static let defaultCellID = "DefaultCellID"
 }
 
 private extension CGFloat {
@@ -33,20 +30,11 @@ final class MainScreenViewController: UIViewController {
     
     // MARK: - Properties
 
-    
     private var presenter = MainScreenPresenter()
-    
-    let weatherButtons: [MainScreenModel] = [
-        MainScreenModel(title: MainScreenStrings.clear, type: .clear),
-        MainScreenModel(title: MainScreenStrings.rain, type: .rain),
-        MainScreenModel(title: MainScreenStrings.storm, type: .storm),
-        MainScreenModel(title: MainScreenStrings.fog, type: .fog),
-        MainScreenModel(title: MainScreenStrings.snow, type: .snow),
-    ]
         
     // MARK: - UI Components
     
-    private lazy var topCollectionView: UICollectionView = {
+    private lazy var weatherCollectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: self.layoutCollectionView)
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.backgroundColor = .clear
@@ -54,7 +42,10 @@ final class MainScreenViewController: UIViewController {
         collection.showsHorizontalScrollIndicator = false
         collection.dataSource = self
         collection.delegate = self
-        collection.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "DefaultCellID")
+        collection.register(WeatherCollectionViewCell.self,
+                            forCellWithReuseIdentifier: MainScreenStrings.idCell)
+        collection.register(UICollectionViewCell.self,
+                            forCellWithReuseIdentifier: MainScreenStrings.defaultCellID)
         return collection
     }()
     
@@ -119,8 +110,7 @@ private extension MainScreenViewController {
     func viewHierarchy() {
         view.addSubview(backgroundView)
         view.addSubview(newBackgroundView)
-        view.addSubview(topCollectionView)
-        
+        view.addSubview(weatherCollectionView)
     }
     
     func setuplayout() {
@@ -135,10 +125,10 @@ private extension MainScreenViewController {
             newBackgroundView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             newBackgroundView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             
-            topCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            topCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            topCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            topCollectionView.heightAnchor.constraint(equalToConstant: Constraint.constant78)
+            weatherCollectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            weatherCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            weatherCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            weatherCollectionView.heightAnchor.constraint(equalToConstant: Constraint.constant78)
         ])
     }
 }
@@ -147,41 +137,21 @@ private extension MainScreenViewController {
 
 extension MainScreenViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        weatherButtons.count
+        presenter.weatherButtons.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultCellID", for: indexPath)
-        
-        for subview in cell.contentView.subviews {
-            subview.removeFromSuperview()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MainScreenStrings.idCell, for: indexPath) as? WeatherCollectionViewCell else {
+            return UICollectionViewCell()
         }
+        let title = presenter.weatherButtons[indexPath.item].title
+        cell.configure(with: title)
 
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.text = weatherButtons[indexPath.item].title
-        
-        cell.contentView.addSubview(label)
-        
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: cell.contentView.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: cell.contentView.centerYAnchor),
-            label.leadingAnchor.constraint(equalTo: cell.contentView.leadingAnchor, constant: Constraint.constant8),
-            label.trailingAnchor.constraint(equalTo: cell.contentView.trailingAnchor, constant: -Constraint.constant8)
-        ])
-        
-        cell.backgroundColor = .white
-        cell.layer.cornerRadius = CGFloat.cornerRadiusForTopCell
-        cell.layer.borderWidth = CGFloat.borderWidth
-        cell.layer.borderColor = UIColor.black.cgColor
-        
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedButton = weatherButtons[indexPath.item]
+        let selectedButton = presenter.weatherButtons[indexPath.item]
         presenter.didTapWeatherButton(type: selectedButton.type)
     }
     
